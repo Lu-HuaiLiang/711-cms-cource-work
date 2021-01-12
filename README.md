@@ -33,9 +33,9 @@ npm install
 
 启动服务
 ```
-npm run start
+npm run serve
 ```
 
 2. vue-client后台前端
 
-一样的步骤
+一样的步骤，命令也是一样的！
