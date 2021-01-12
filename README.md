@@ -6,5 +6,48 @@
 
 ‼️使用方法
 
-1.下载完文件夹
+下载文件夹
+```
+git clone https://github.com/Lu-HuaiLiang/711-cms.git
+```
 
+然后cd进入文件夹
+```
+cd 711-cms
+```
+
+1. koa-server服务端
+
+进入文件夹
+```
+cd koa-server
+```
+
+初始化npm包，npm包安装
+```
+npm init
+npm install
+```
+
+启动服务
+```
+npm run start
+```
+
+2. vue-client后台前端
+
+进入文件夹
+```
+cd vue-client
+```
+
+初始化npm包，npm包安装
+```
+npm init
+npm install
+```
+
+启动服务
+```
+npm run serve
+```
