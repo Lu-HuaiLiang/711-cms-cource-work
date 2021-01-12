@@ -10,3 +10,12 @@ export const getBestSaleByName = (date1,date2,ByWhat) => {
         }
     })
 }
+
+
+
+export const getMonthSale = () => {
+    return axios.request({
+        url: prefix + '/getMonthSale',
+        method: 'get'
+    })
+}

@@ -11,7 +11,8 @@ export const createDiscard = ({productId,discardNumber}) => {
   })
 }
 
-export const getAllDiscard = ({productId,discardNumber}) => {
+// http://localhost:8082/discard/getAllDiscard
+export const getAllDiscard = () => {
   return axios.request({
     url: prefix+'/getAllDiscard',
     method: 'get'

@@ -58,7 +58,7 @@ router.post('/UpdateProduct',async (ctx) => {
 
 router.post('/AddProduct',async (ctx) => {
 
-    console.log(ctx.request.body)
+    // console.log(ctx.request.body)
 
     let {
         productId,productName,productPrice,productCost,

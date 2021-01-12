@@ -14,7 +14,8 @@ Discard.init({
     productId: Sequelize.STRING,
     productName: Sequelize.STRING,
     productCost: Sequelize.INTEGER,
-    discardNumber: Sequelize.INTEGER      
+    discardNumber: Sequelize.INTEGER,
+    discardMoney: Sequelize.INTEGER
 },{
     sequelize:dbsequelize,
     tableName:'discard'

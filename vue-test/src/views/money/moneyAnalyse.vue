@@ -2,6 +2,58 @@
     <!-- <v-chart theme="ovilia-green" :options="polar"/> -->
     <!-- <div id="container" ref="chart"></div> -->
     <div>
+    <Row type="flex" justify="space-around" style="margin-bottom: 30px;">
+        <Col span="5" >
+                <Card style="width:100%">
+                    <p slot="title">
+                    <!-- <Icon type="ios-film-outline"></Icon> -->
+                        本月的销售额
+                    </p>
+                    <div style="text-align:center">
+                        <h3>+ {{salePrice}}元</h3>
+                    </div>
+                </Card>
+        </Col>
+        <Col  span="5" >
+            <Card style="width:100%">
+                <p slot="title">
+                    <!-- <Icon type="ios-film-outline"></Icon> -->
+                    
+                    本月的成本
+                </p>
+                <div style="text-align:center">
+
+                        <h3>- {{saleCost}}元</h3>
+                </div>
+            </Card>
+        </Col>
+        <Col span="5" >
+            <Card style="width:100%">
+                <p slot="title">
+                    <!-- <Icon type="ios-film-outline"></Icon> -->
+                    本月的报销
+                </p>
+                 <div style="text-align:center">
+        
+                        <h3>- {{discardMoney}}元</h3>
+                </div>
+            </Card>
+        </Col>
+
+        <Col span="5" >
+            <Card style="width:100%">
+                <p slot="title">
+                    <!-- <Icon type="ios-film-outline"></Icon> -->
+                    本月的利润
+                </p>
+                <div style="text-align:center">
+             
+                        <h3>= {{profit}}元</h3>
+                </div>
+            </Card>
+        </Col>
+    </Row>
+
     <Row>
         <Col span="6">
             <Card dis-hover>
@@ -24,9 +76,10 @@
                     </FormItem>
                       <FormItem label-position="top"  label="">
                             <Select v-model="formItem.Kind" placeholder="根据啥，看销售情况">
-                                <Option value="productName">商品名称</Option>
-                                <Option value="productKind">商品类别</Option>
-                                <Option value="productBrand">商品品牌</Option>
+                                <Option value="productName">根据啥商品名称，看销售情况</Option>
+                                <Option value="productKind">根据商品类别，看销售情况</Option>
+                                <Option value="productBrand">根据商品品牌，看销售情况</Option>
+                                <Option value="all">盈亏表</Option>
                             </Select>
                         </FormItem>
                     <FormItem>
@@ -51,7 +104,7 @@
 
 <script>
 
-import {getBestSaleByName,getBestSaleByBrand,getBestSaleByKind} from '@/api/money'
+import {getBestSaleByName,getMonthSale} from '@/api/money'
 const moment = require('moment');
 export default {
     data () {
@@ -62,8 +115,23 @@ export default {
                 Kind: ''
             },
             list: [],
-            columns: []
+            columns: [],
+            salePrice: 0, 
+            saleCost: 0, 
+            discardMoney:0, 
+            profit: 0
         }
+    },
+
+    async mounted(){
+        let _ = this
+        await getMonthSale().then(res=>{
+            let {salePrice, saleCost, discardMoney, profit} = res.data
+            _.salePrice = salePrice,
+            _.saleCost = saleCost
+            _.discardMoney = discardMoney
+            _.profit = profit
+        })
     },
     methods: {
         async handleSubmit(){

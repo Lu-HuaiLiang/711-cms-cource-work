@@ -1,6 +1,6 @@
 <template>
     <div>
-            <Table border :columns="columns12" :data="list">
+    <Table border :columns="columns12" :data="list">
         <template slot-scope="{ row }" slot="productId">
             <strong>{{ row.productId }}</strong>
         </template>

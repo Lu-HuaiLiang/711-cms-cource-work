@@ -18,7 +18,10 @@ Sale.init({
     productKind: Sequelize.STRING,
     productNumber: Sequelize.INTEGER,         
     productPrice: Sequelize.INTEGER,
-    proTotalPrice: Sequelize.INTEGER
+    proTotalPrice: Sequelize.INTEGER,
+    proTotalProfit: Sequelize.INTEGER,
+    proTotalCost: Sequelize.INTEGER
+
 },{sequelize:dbsequelize,tableName:'sale'})
 
 module.exports = Sale

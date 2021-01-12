@@ -1,6 +1,7 @@
 <template>
-
     <div>
+        <!-- <Button type="primary" size="small" style="margin-bottom: 10px;" @click="show(index)">+ 新添商品</Button> -->
+        
         <Table border :columns="columns12" :data="list">
                 <template slot-scope="{ row }" slot="productId">
                     <strong>{{ row.productId }}</strong>
@@ -25,19 +26,15 @@
                 <FormItem label="商品类别" prop="productKind">
                     <Input v-model="formData.productKind" placeholder=""></Input>
                 </FormItem>
-                
                 <FormItem label="商品品牌" prop="productBrand">
                     <Input v-model="formData.productBrand" placeholder=""></Input>
                 </FormItem>
-
                 <FormItem label="商品到岸价" prop="productCost">
                     <InputNumber :max="999" :min="1" v-model="formData.productCost"></InputNumber>
-                </FormItem>
-                    
+                </FormItem>                
                 <FormItem label="商品普通价" prop="productPrice">
                     <InputNumber :max="999" :min="1" v-model="formData.productPrice"></InputNumber>
                 </FormItem>
-
                 <FormItem label="商品会员价" prop="productVipPrice">
                     <InputNumber :max="999" :min="1" v-model="formData.productVipPrice"></InputNumber>
                 </FormItem>
@@ -96,9 +93,8 @@ export default {
             ],
             list: [],
 
-
-            value3: false,
             alter_index: 0,
+            value3: false,
             styles: {
                 height: 'calc(100% - 55px)',
                 overflow: 'auto',

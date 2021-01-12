@@ -12,3 +12,6 @@ module.exports = {
       expiresIn: 60 * 60//过期时间
     }
 }
+
+// root
+// Zxf15919099509###

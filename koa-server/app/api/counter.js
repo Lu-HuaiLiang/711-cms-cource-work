@@ -21,7 +21,7 @@ router.post('/createOrder', async (ctx) => {
     // 1. 确认是否会员
     // 如果phone不为空但会员表里没有 -> 报错
     // 如果phone不为空且正确，会员价处理
-    console.log(phone)
+    // console.log(phone)
     if (phone) {
         let member = await Membership.findOne({where:{phone}})
         if (!member) throw new global.errs.ParameterException('会员电话号码错误！')
@@ -43,7 +43,7 @@ router.post('/createOrder', async (ctx) => {
         // 有无库存
         let in_pro = await Inventory.findOne({where:{productId:list[i].productId}})
         if (!in_pro) throw new global.errs.ParameterException(`商品编码【${list[i].productId}】不在库存表`)
-        console.log(list[i].productNumber,in_pro.productNumber)
+        // console.log(list[i].productNumber,in_pro.productNumber)
         if (list[i].productNumber > in_pro.productNumber) throw new global.errs.ParameterException(`商品编码【${list[i].productId}】库存不足,还剩${in_pro.productNumber}件`)
 
         // 4. 处理要输出的数据
@@ -52,12 +52,12 @@ router.post('/createOrder', async (ctx) => {
         let num = list[i].productNumber
         pro['dataValues'].productNumber = list[i].productNumber
         pro['dataValues'].isVip = isVip?'是':'否',
-        pro['dataValues'].productPrice = isVip?vipPrice:price
+        // pro['dataValues'].productPrice = isVip?vipPrice:price
         pro['dataValues'].proTotalPrice = isVip?vipPrice*num:price*num
         pro['dataValues'].proInventory = in_pro.productNumber
         delete pro['dataValues'].created_at
         delete pro['dataValues'].id
-        delete pro['dataValues'].productVipPrice
+        // delete pro['dataValues'].productVipPrice
         delete pro['dataValues'].updated_at
         products.push(pro['dataValues'])
     }
@@ -78,7 +78,7 @@ router.post('/postOrder',async (ctx) => {
     if (list.length==0) throw new ParameterException('订单表不能为空') 
     
     if (phone) {
-        console.log(totalPrice,phone)
+        // console.log(totalPrice,phone)
         let member = await Membership.findOne({ where: {phone} })
         if (!member) throw new ParameterException('会员不存在，请检测手机号码！') 
         await Membership.update({
@@ -90,7 +90,9 @@ router.post('/postOrder',async (ctx) => {
     await Order.create({orderId})
 
     for (let i=0; i<list.length; i++){
-        let {productId,productPrice,productNumber,proInventory,proTotalPrice,productName,productBrand,productKind} = list[i]
+        console.log(list[i])
+        let {productId,productPrice,productVipPrice,isVip,productNumber,productCost,
+            proInventory,proTotalPrice,productName,productBrand,productKind} = list[i]
         // 2. sale 写入
         new_sale = {
             orderId,
@@ -99,8 +101,10 @@ router.post('/postOrder',async (ctx) => {
             productBrand,
             productKind,
             productNumber,
-            productPrice,
-            proTotalPrice
+            productPrice: isVip == '是' ? productVipPrice : productPrice,
+            proTotalPrice,
+            proTotalCost: productNumber*productCost,
+            proTotalProfit: proTotalPrice - productNumber*productCost
         }
         await Sale.create(new_sale)
         // 3. 减库存

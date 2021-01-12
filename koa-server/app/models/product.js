@@ -2,7 +2,7 @@ const { Sequelize, Model } = require('sequelize')
 const { dbsequelize } = require('../../core/db')
 const { unset, clone, isArray } = require('lodash')
 class Product extends Model {}
-
+// orm 
 Product.init({
     id: {
         type: Sequelize.INTEGER,

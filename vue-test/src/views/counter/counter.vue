@@ -2,7 +2,7 @@
     <div>
         <!-- style="background:red;" -->
     <Row style="margin-top:20px;">
-        <Col span='9' offset="2">
+        <Col span='9' offset="0">
             <h1 style="margin-left:109px;">商品清单</h1>
             <Form ref="formDynamic" :model="formDynamic" :label-width="110" style="width: 350px">
                 <template v-for="(item, index) in formDynamic.items">
@@ -52,7 +52,7 @@
             </Form>
         </Col>
         
-        <Col span="12" offset="0">
+        <Col span="15" offset="0">
             <Row>
                 <Col style="margin-bottom:20px;">
                     <Card dis-hover>
@@ -69,10 +69,14 @@
                             <Icon type="ios-film-outline"></Icon>
                             打印订单
                         </p>
-                        <Table show-summary :summary-method="handleSummary" :columns="columns" :data="tableData"></Table>
+                        <Table show-summary :summary-method="handleSummary" :columns="columns" :data="tableData">
+                            <template slot-scope="{ row }" slot="isVip">
+                                <strong style="color:red">{{ row.isVip }}</strong>
+                            </template>
+                        </Table>
                     </Card>
                 </Col>
-                <Col >
+                <!-- <Col >
                     <Card dis-hover>
                         <p slot="title">
                             <Icon type="ios-film-outline"></Icon>
@@ -82,7 +86,7 @@
                         <p>商品编号：#2 秘制小汉堡</p>
                         <p>商品编号：#3 苹果</p>
                     </Card>
-                </Col>
+                </Col> -->
             </Row>
         </Col>
     </Row>
@@ -101,9 +105,10 @@ export default {
                 columns: [
                     {key:'productId',title:'编号',editable: true},
                     {key:'productName',title:'名称',editable: true},
-                    {key:'productPrice',title:'单价',editable: true},
+                    {key:'productPrice',title:'普通价',editable: true},
+                    {key:'productVipPrice',title:'会员价',editable: true},
                     {key:'productNumber',title:'数量',editable: true},
-                    {key:'isVip',title:'会员',editable: true},
+                    {slot:'isVip',title:'会员',editable: true},
                     {key:'proTotalPrice',title:'总价',editable: true}
                 ],
                 index: 1,
@@ -111,7 +116,7 @@ export default {
                 formDynamic: {
                     items: [
                         {
-                            productId: '#123',
+                            productId: '',
                             productNumber: 1,
                             index: 1,
                             status: 1
@@ -171,6 +176,17 @@ export default {
                     if (res.code == 200) {
                         _.tableData = []
                         _.disabled = true
+                        _.formDynamic = {
+                            items: [
+                                {
+                                    productId: '',
+                                    productNumber: 1,
+                                    index: 1,
+                                    status: 1
+                                }
+                            ]
+                        },
+                        _.totalPrice = 0
                         this.$Message.success('订单提交成功！');   
                     } else {
                         this.$Message.error(res.msg);
@@ -190,7 +206,7 @@ export default {
                         };
                         return;
                     }
-                    if (index !== 5) {
+                    if (index !== 6) {
                         sums[key] = {
                             key,
                             value: ''
