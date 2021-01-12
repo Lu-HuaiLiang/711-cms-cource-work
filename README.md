@@ -26,6 +26,8 @@ cd koa-server
 初始化npm包，npm包安装
 ```
 npm init
+```
+```
 npm install
 ```
 
@@ -36,18 +38,4 @@ npm run start
 
 2. vue-client后台前端
 
-进入文件夹
-```
-cd vue-client
-```
-
-初始化npm包，npm包安装
-```
-npm init
-npm install
-```
-
-启动服务
-```
-npm run serve
-```
+一样的步骤
